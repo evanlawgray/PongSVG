@@ -9,12 +9,23 @@ export default class Game {
 		this.element = element;
 		this.width = width;
 		this.height = height;
+		this.spaceBar = KEYS.spaceBar;
+		this.paused = false;
 
 		this.boardGap = GAMESETTINGS.boardGap;
 		this.paddleWidth = GAMESETTINGS.paddleWidth;
 		this.paddleHeight = GAMESETTINGS.paddleHeight;
 	
 		this.gameElement = document.getElementById(this.element);
+
+		document.addEventListener('keydown', event => {
+
+			switch (event.keyCode) {
+        		case this.spaceBar:
+         			this.paused = !this.paused;
+          		break;
+        	}
+		});
 
 		this.board = new Board(this.width, this.height);
 
@@ -47,6 +58,7 @@ export default class Game {
 
 	render() {
 
+		if (this.paused === false) {
 		this.gameElement.innerHTML = '';
 
 		let svg = document.createElementNS(SVG_NS, 'svg');
@@ -59,7 +71,7 @@ export default class Game {
 		this.paddle1.render(svg);
 		this.paddle2.render(svg);
 		this.ball.render(svg);
-		
+		}
 	}
 
 }

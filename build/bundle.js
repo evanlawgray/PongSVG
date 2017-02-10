@@ -707,8 +707,13 @@
 				this.x = this.boardWidth / 2;
 				this.y = this.boardHeight / 2;
 
-				//Generates a number between -5 and 5
-				this.vy = Math.floor(Math.random() * 10 - 5);
+				this.vy = 0;
+
+				while (this.vy === 0) {
+					//Generates a number between -5 and 5
+					this.vy = Math.floor(Math.random() * 10 - 5);
+				}
+
 				this.vx = this.direction * (6 - Math.abs(this.vy));
 			}
 		}, {
@@ -717,8 +722,25 @@
 				this.reset();
 			}
 		}, {
+			key: 'wallCollision',
+			value: function wallCollision() {
+				var hitLeft = this.x - this.radius <= 0;
+				var hitRight = this.x + this.radius >= this.boardWidth;
+				var hitTop = this.y - this.radius <= 0;
+				var hitBottom = this.y + this.radius >= 0;
+
+				if (hitLeft || hitRight) {
+					this.vx = -this.vx;
+				} else if (hitTop || hitBottom) {
+					this.vy = -this.vy;
+				}
+			}
+		}, {
 			key: 'render',
 			value: function render(svg) {
+				this.x += this.vx;
+				this.y += this.vy;
+
 				var ball = document.createElementNS(_settings.SVG_NS, 'circle');
 				ball.setAttributeNS(null, 'cx', this.x);
 				ball.setAttributeNS(null, 'cy', this.y);

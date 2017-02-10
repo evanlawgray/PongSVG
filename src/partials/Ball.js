@@ -7,7 +7,7 @@ export default class Ball {
     this.boardHeight = boardHeight;
     this.direction = 1;
     this.reset();
-  }
+	}
 
   	reset() {
   		this.x = this.boardWidth/2;
@@ -27,9 +27,30 @@ export default class Ball {
 		this.reset();
 	}
 
+	wallCollision() {
+		const hitLeft = this.x - this.radius <= 0;
+		const hitRight = this.x + this.radius >= this.boardWidth;
+		const hitTop = this.y - this.radius <= 0;
+		const hitBottom = this.y + this.radius >= this.boardHeight;
+
+		if (hitLeft || hitRight) {
+			this.vx = -this.vx;
+		} else if (hitTop || hitBottom) {
+			this.vy = -this.vy;
+		}
+	}
+
 	render(svg) {
+		this.wallCollision();
+
+		if (this.pause) {
+			this.vx == 0;
+			this.vy == 0;
+		}
+
 		this.x += this.vx;
 		this.y += this.vy;
+
 
 		let ball = document.createElementNS(SVG_NS, 'circle');
 		ball.setAttributeNS(null, 'cx', this.x);

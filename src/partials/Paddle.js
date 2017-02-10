@@ -1,4 +1,4 @@
-import {SVG_NS, GAMESETTINGS} from '../settings';
+import {SVG_NS, GAMESETTINGS, KEYS} from '../settings';
 
 export default class Paddle {
   constructor(boardHeight, width, height, x, y, up, down) {
@@ -11,6 +11,7 @@ export default class Paddle {
     this.score = GAMESETTINGS.score;
     this.up = up;
     this.down = down;
+    this.paused = false;
 
     document.addEventListener('keydown', event => {
 
@@ -22,13 +23,13 @@ onkeydown = onkeyup = function(event){
 }*/
       switch (event.keyCode) {
         case this.up:
-          this.moveUP();
+          if (this.paused === false){this.moveUP()}
           break;
         case this.down:
-          this.moveDown();
+          if (this.paused === false){this.moveDown()}
           break;
-        case 32:
-         /* console.log('space');*/
+        case KEYS.spaceBar:
+          this.paused = !this.paused;
           break;
         }
     });
