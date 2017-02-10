@@ -7,3 +7,11 @@ export const KEYS = {
   down: 40,     // player 2 down key
   spaceBar: 32, // we'll use this later...
 }
+
+export const GAMESETTINGS = {
+	speed: 10,
+	score: 0,
+	boardGap: 10,
+	paddleWidth: 8,
+	paddleHeight: 56,
+}

@@ -1,5 +1,6 @@
 import {SVG_NS} from '../settings';
 import {KEYS} from '../settings';
+import {GAMESETTINGS} from '../settings';
 import Board from './Board';
 import Paddle from './Paddle';
 
@@ -10,9 +11,9 @@ export default class Game {
 		this.width = width;
 		this.height = height;
 
-		this.boardGap = 10;
-		this.paddleWidth = 8;
-		this.paddleHeight = 56;
+		this.boardGap = GAMESETTINGS.boardGap;
+		this.paddleWidth = GAMESETTINGS.paddleWidth;
+		this.paddleHeight = GAMESETTINGS.paddleHeight;
 	
 		this.gameElement = document.getElementById(this.element);
 
@@ -24,8 +25,8 @@ export default class Game {
 			this.paddleHeight,
 			this.boardGap,
 			((this.height - this.paddleHeight)/2),
-			KEYS.up,
-			KEYS.down
+			KEYS.a,
+			KEYS.z
 		);
 
 		this.paddle2 = new Paddle(
@@ -34,8 +35,8 @@ export default class Game {
 			this.paddleHeight, 
 			(this.width - this.boardGap - this.paddleWidth),
 			((this.height - this.paddleHeight)/2),
-			KEYS.a,
-			KEYS.z
+			KEYS.up,
+			KEYS.down
 		);
 	}
 

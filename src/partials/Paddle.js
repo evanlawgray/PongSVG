@@ -1,4 +1,5 @@
-import {SVG_NS} from '../settings'
+import {SVG_NS} from '../settings';
+import {GAMESETTINGS} from '../settings';
 
 export default class Paddle {
   constructor(boardHeight, width, height, x, y, up, down) {
@@ -7,8 +8,8 @@ export default class Paddle {
     this.height = height;
     this.x = x;
     this.y = y;
-    this.speed = 10;
-    this.score = 0;
+    this.speed = GAMESETTINGS.speed;
+    this.score = GAMESETTINGS.score;
     this.up = up;
     this.down = down;
 
