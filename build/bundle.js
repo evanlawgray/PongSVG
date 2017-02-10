@@ -468,17 +468,17 @@
 			this.width = width;
 			this.height = height;
 
-			this.boardGap = 10;
-			this.paddleWidth = 8;
-			this.paddleHeight = 56;
+			this.boardGap = _settings.GAMESETTINGS.boardGap;
+			this.paddleWidth = _settings.GAMESETTINGS.paddleWidth;
+			this.paddleHeight = _settings.GAMESETTINGS.paddleHeight;
 
 			this.gameElement = document.getElementById(this.element);
 
 			this.board = new _Board2.default(this.width, this.height);
 
-			this.paddle1 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height - this.paddleHeight) / 2, _settings.KEYS.up, _settings.KEYS.down);
+			this.paddle1 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height - this.paddleHeight) / 2, _settings.KEYS.a, _settings.KEYS.z);
 
-			this.paddle2 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.width - this.boardGap - this.paddleWidth, (this.height - this.paddleHeight) / 2, _settings.KEYS.a, _settings.KEYS.z);
+			this.paddle2 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.width - this.boardGap - this.paddleWidth, (this.height - this.paddleHeight) / 2, _settings.KEYS.up, _settings.KEYS.down);
 		}
 
 		_createClass(Game, [{
@@ -522,9 +522,12 @@
 	  down: 40, // player 2 down key
 	  spaceBar: 32 };
 
-	var PLAYERSETTINGS = exports.PLAYERSETTINGS = {
+	var GAMESETTINGS = exports.GAMESETTINGS = {
 	  speed: 10,
-	  score: 0
+	  score: 0,
+	  boardGap: 10,
+	  paddleWidth: 8,
+	  paddleHeight: 56
 	};
 
 /***/ },
@@ -606,8 +609,8 @@
 	    this.height = height;
 	    this.x = x;
 	    this.y = y;
-	    this.speed = _settings.PLAYERSETTINGS.speed;
-	    this.score = _settings.PLAYERSETTINGS.score;
+	    this.speed = _settings.GAMESETTINGS.speed;
+	    this.score = _settings.GAMESETTINGS.score;
 	    this.up = up;
 	    this.down = down;
 

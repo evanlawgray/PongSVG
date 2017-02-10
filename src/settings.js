@@ -14,4 +14,6 @@ export const GAMESETTINGS = {
 	boardGap: 10,
 	paddleWidth: 8,
 	paddleHeight: 56,
+	ballDirection: 1,
+	ballRadius: 8
 }

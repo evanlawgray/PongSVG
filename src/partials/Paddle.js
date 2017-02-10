@@ -1,5 +1,4 @@
-import {SVG_NS} from '../settings';
-import {GAMESETTINGS} from '../settings';
+import {SVG_NS, GAMESETTINGS} from '../settings';
 
 export default class Paddle {
   constructor(boardHeight, width, height, x, y, up, down) {
@@ -14,20 +13,36 @@ export default class Paddle {
     this.down = down;
 
     document.addEventListener('keydown', event => {
+
+/*      //POTENTIAL FIX FOR MULTIPLE SIMULTANEOUS KEYDOWN EVENTS
+      var map = []; // You could also use an array
+onkeydown = onkeyup = function(event){
+    map[e.keyCode] = e.type == 'keydown';
+    // insert conditional here 
+}*/
       switch (event.keyCode) {
         case this.up:
-          this.y = Math.max((this.y - this.speed), (this.boardHeight - this.boardHeight));
+          this.moveUP();
           break;
         case this.down:
-          this.y = Math.min((this.y + this.speed), this.boardHeight-this.height);
+          this.moveDown();
           break;
         case 32:
-          console.log('space');
+         /* console.log('space');*/
           break;
         }
     });
 
   }
+
+  moveUP() {
+    this.y = Math.max((this.y - this.speed), (this.boardHeight - this.boardHeight));
+  }
+
+  moveDown(){
+    this.y = Math.min((this.y + this.speed), this.boardHeight - this.height);
+  }
+
   render(svg) {
     let paddle = document.createElementNS(SVG_NS, 'rect');
     paddle.setAttributeNS(null, 'width', this.width);
