@@ -7,7 +7,7 @@ export default class Ball {
     this.boardHeight = boardHeight;
     this.direction = 1;
     this.reset();
-	}
+  }
 
   reset() {
   	this.x = this.boardWidth/2;
@@ -21,7 +21,7 @@ export default class Ball {
   	}
 
 	this.vx = this.direction * (6 - Math.abs(this.vy));
-	}
+  }
 
   scoreGoal() {
 	this.reset();
@@ -64,28 +64,27 @@ export default class Ball {
   			this.x - this.radius <= rightX &&
     		this.x - this.radius >= leftX &&
     		this.y + this.radius >= topY && this.y - this.radius <= bottomY
-    		) {
-  				this.vx = -this.vx;
-    		}
-  		}
-	}
+    	) {
+  			this.vx = -this.vx;
+    	}
+  	}
+  }
 
-	render(svg, paddle1, paddle2) {
+  render(svg, paddle1, paddle2) {
 
-		this.wallCollision();
-		this.paddleCollision(paddle1, paddle2);
+	this.wallCollision();
+	this.paddleCollision(paddle1, paddle2);
 
-		this.x += this.vx;
-		this.y += this.vy;
+	this.x += this.vx;
+	this.y += this.vy;
 
-		let ball = document.createElementNS(SVG_NS, 'circle');
-		ball.setAttributeNS(null, 'cx', this.x);
-		ball.setAttributeNS(null, 'cy', this.y);
-		ball.setAttributeNS(null, 'r', this.radius);
-		ball.setAttributeNS(null, 'fill', 'white');
+	let ball = document.createElementNS(SVG_NS, 'circle');
+	ball.setAttributeNS(null, 'cx', this.x);
+	ball.setAttributeNS(null, 'cy', this.y);
+	ball.setAttributeNS(null, 'r', this.radius);
+	ball.setAttributeNS(null, 'fill', 'white');
 
-		svg.appendChild(ball);
-
-	}
+	svg.appendChild(ball);
+  }
 
 }

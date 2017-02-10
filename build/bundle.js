@@ -712,7 +712,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -724,91 +724,104 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Ball = function () {
-		function Ball(radius, boardWidth, boardHeight) {
-			_classCallCheck(this, Ball);
+	  function Ball(radius, boardWidth, boardHeight) {
+	    _classCallCheck(this, Ball);
 
-			this.radius = radius;
-			this.boardWidth = boardWidth;
-			this.boardHeight = boardHeight;
-			this.direction = 1;
-			this.reset();
-		}
+	    this.radius = radius;
+	    this.boardWidth = boardWidth;
+	    this.boardHeight = boardHeight;
+	    this.direction = 1;
+	    this.reset();
+	  }
 
-		_createClass(Ball, [{
-			key: 'reset',
-			value: function reset() {
-				this.x = this.boardWidth / 2;
-				this.y = this.boardHeight / 2;
+	  _createClass(Ball, [{
+	    key: 'reset',
+	    value: function reset() {
+	      this.x = this.boardWidth / 2;
+	      this.y = this.boardHeight / 2;
 
-				this.vy = 0;
+	      this.vy = 0;
 
-				while (this.vy === 0) {
-					//Generates a number between -5 and 5
-					this.vy = Math.floor(Math.random() * 10 - 5);
-				}
+	      while (this.vy === 0) {
+	        //Generates a number between -5 and 5
+	        this.vy = Math.floor(Math.random() * 10 - 5);
+	      }
 
-				this.vx = this.direction * (6 - Math.abs(this.vy));
-			}
-		}, {
-			key: 'scoreGoal',
-			value: function scoreGoal() {
-				this.reset();
-			}
-		}, {
-			key: 'wallCollision',
-			value: function wallCollision() {
-				var hitLeft = this.x - this.radius <= 0;
-				var hitRight = this.x + this.radius >= this.boardWidth;
-				var hitTop = this.y - this.radius <= 0;
-				var hitBottom = this.y + this.radius >= this.boardHeight;
+	      this.vx = this.direction * (6 - Math.abs(this.vy));
+	    }
+	  }, {
+	    key: 'scoreGoal',
+	    value: function scoreGoal() {
+	      this.reset();
+	    }
+	  }, {
+	    key: 'wallCollision',
+	    value: function wallCollision() {
+	      var hitLeft = this.x - this.radius <= 0;
+	      var hitRight = this.x + this.radius >= this.boardWidth;
+	      var hitTop = this.y - this.radius <= 0;
+	      var hitBottom = this.y + this.radius >= this.boardHeight;
 
-				if (hitLeft || hitRight) {
-					this.vx = -this.vx;
-				} else if (hitTop || hitBottom) {
-					this.vy = -this.vy;
-				}
-			}
-		}, {
-			key: 'paddleCollision',
-			value: function paddleCollision(player1, player2) {
-				if (this.vx > 0) {
+	      if (hitLeft || hitRight) {
+	        this.vx = -this.vx;
+	      } else if (hitTop || hitBottom) {
+	        this.vy = -this.vy;
+	      }
+	    }
+	  }, {
+	    key: 'paddleCollision',
+	    value: function paddleCollision(player1, player2) {
+	      if (this.vx > 0) {
 
-					var paddle = player2.coordinates(player2.x, player2.y, player2.width, player2.height);
+	        var paddle = player2.coordinates(player2.x, player2.y, player2.width, player2.height);
 
-					var _paddle = _slicedToArray(paddle, 4),
-					    _leftX = _paddle[0],
-					    _rightX = _paddle[1],
-					    _topY = _paddle[2],
-					    _bottomY = _paddle[3];
+	        var _paddle = _slicedToArray(paddle, 4),
+	            leftX = _paddle[0],
+	            rightX = _paddle[1],
+	            topY = _paddle[2],
+	            bottomY = _paddle[3];
 
-					if (this.x + this.radius >= _leftX && this.x + this.radius <= _rightX && this.y >= _topY && this.y <= _bottomY) {
-						this.vx = -this.vx;
-					}
-				} else {
-					this.x - this.radius <= rightX && this.x - this.radius >= leftX && this.y >= topY && this.y <= bottomY;
-				}
-			}
-		}, {
-			key: 'render',
-			value: function render(svg, paddle1, paddle2) {
+	        console.log(rightX);
 
-				this.wallCollision();
-				this.paddleCollision(paddle1, paddle2);
+	        if (this.x + this.radius >= leftX && this.x + this.radius <= rightX && this.y + this.radius >= topY && this.y - this.radius <= bottomY) {
+	          this.vx = -this.vx;
+	        }
+	      } else {
 
-				this.x += this.vx;
-				this.y += this.vy;
+	        var _paddle2 = player1.coordinates(player1.x, player1.y, player1.width, player1.height);
 
-				var ball = document.createElementNS(_settings.SVG_NS, 'circle');
-				ball.setAttributeNS(null, 'cx', this.x);
-				ball.setAttributeNS(null, 'cy', this.y);
-				ball.setAttributeNS(null, 'r', this.radius);
-				ball.setAttributeNS(null, 'fill', 'white');
+	        var _paddle3 = _slicedToArray(_paddle2, 4),
+	            _leftX = _paddle3[0],
+	            _rightX = _paddle3[1],
+	            _topY = _paddle3[2],
+	            _bottomY = _paddle3[3];
 
-				svg.appendChild(ball);
-			}
-		}]);
+	        if (this.x - this.radius <= _rightX && this.x - this.radius >= _leftX && this.y + this.radius >= _topY && this.y - this.radius <= _bottomY) {
+	          this.vx = -this.vx;
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render(svg, paddle1, paddle2) {
 
-		return Ball;
+	      this.wallCollision();
+	      this.paddleCollision(paddle1, paddle2);
+
+	      this.x += this.vx;
+	      this.y += this.vy;
+
+	      var ball = document.createElementNS(_settings.SVG_NS, 'circle');
+	      ball.setAttributeNS(null, 'cx', this.x);
+	      ball.setAttributeNS(null, 'cy', this.y);
+	      ball.setAttributeNS(null, 'r', this.radius);
+	      ball.setAttributeNS(null, 'fill', 'white');
+
+	      svg.appendChild(ball);
+	    }
+	  }]);
+
+	  return Ball;
 	}();
 
 	exports.default = Ball;
