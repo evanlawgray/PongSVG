@@ -466,17 +466,30 @@
 
 	var Game = function () {
 		function Game(element, width, height) {
+			var _this = this;
+
 			_classCallCheck(this, Game);
 
 			this.element = element;
 			this.width = width;
 			this.height = height;
+			this.spaceBar = _settings.KEYS.spaceBar;
+			this.paused = false;
 
 			this.boardGap = _settings.GAMESETTINGS.boardGap;
 			this.paddleWidth = _settings.GAMESETTINGS.paddleWidth;
 			this.paddleHeight = _settings.GAMESETTINGS.paddleHeight;
 
 			this.gameElement = document.getElementById(this.element);
+
+			document.addEventListener('keydown', function (event) {
+
+				switch (event.keyCode) {
+					case _this.spaceBar:
+						_this.paused = !_this.paused;
+						break;
+				}
+			});
 
 			this.board = new _Board2.default(this.width, this.height);
 
@@ -491,6 +504,10 @@
 			key: 'render',
 			value: function render() {
 
+				if (this.paused) {
+					return;
+				}
+
 				this.gameElement.innerHTML = '';
 
 				var svg = document.createElementNS(_settings.SVG_NS, 'svg');
@@ -502,7 +519,7 @@
 				this.board.render(svg);
 				this.paddle1.render(svg);
 				this.paddle2.render(svg);
-				this.ball.render(svg);
+				this.ball.render(svg, this.paddle1, this.paddle2);
 			}
 		}]);
 
@@ -622,6 +639,7 @@
 	    this.score = _settings.GAMESETTINGS.score;
 	    this.up = up;
 	    this.down = down;
+	    this.paused = false;
 
 	    document.addEventListener('keydown', function (event) {
 
@@ -633,13 +651,17 @@
 	      }*/
 	      switch (event.keyCode) {
 	        case _this.up:
-	          _this.moveUP();
+	          if (_this.paused === false) {
+	            _this.moveUP();
+	          }
 	          break;
 	        case _this.down:
-	          _this.moveDown();
+	          if (_this.paused === false) {
+	            _this.moveDown();
+	          }
 	          break;
-	        case 32:
-	          /* console.log('space');*/
+	        case _settings.KEYS.spaceBar:
+	          _this.paused = !_this.paused;
 	          break;
 	      }
 	    });
@@ -654,6 +676,15 @@
 	    key: 'moveDown',
 	    value: function moveDown() {
 	      this.y = Math.min(this.y + this.speed, this.boardHeight - this.height);
+	    }
+	  }, {
+	    key: 'coordinates',
+	    value: function coordinates(x, y, width, height) {
+	      var leftX = x;
+	      var rightX = x + width;
+	      var topY = y;
+	      var bottomY = y + height;
+	      return [leftX, rightX, topY, bottomY];
 	    }
 	  }, {
 	    key: 'render',
@@ -683,6 +714,8 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -727,7 +760,7 @@
 				var hitLeft = this.x - this.radius <= 0;
 				var hitRight = this.x + this.radius >= this.boardWidth;
 				var hitTop = this.y - this.radius <= 0;
-				var hitBottom = this.y + this.radius >= 0;
+				var hitBottom = this.y + this.radius >= this.boardHeight;
 
 				if (hitLeft || hitRight) {
 					this.vx = -this.vx;
@@ -736,8 +769,32 @@
 				}
 			}
 		}, {
+			key: 'paddleCollision',
+			value: function paddleCollision(player1, player2) {
+				if (this.vx > 0) {
+
+					var paddle = player2.coordinates(player2.x, player2.y, player2.width, player2.height);
+
+					var _paddle = _slicedToArray(paddle, 4),
+					    _leftX = _paddle[0],
+					    _rightX = _paddle[1],
+					    _topY = _paddle[2],
+					    _bottomY = _paddle[3];
+
+					if (this.x + this.radius >= _leftX && this.x + this.radius <= _rightX && this.y >= _topY && this.y <= _bottomY) {
+						this.vx = -this.vx;
+					}
+				} else {
+					this.x - this.radius <= rightX && this.x - this.radius >= leftX && this.y >= topY && this.y <= bottomY;
+				}
+			}
+		}, {
 			key: 'render',
-			value: function render(svg) {
+			value: function render(svg, paddle1, paddle2) {
+
+				this.wallCollision();
+				this.paddleCollision(paddle1, paddle2);
+
 				this.x += this.vx;
 				this.y += this.vy;
 

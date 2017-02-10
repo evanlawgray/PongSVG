@@ -58,7 +58,8 @@ export default class Game {
 
 	render() {
 
-		if (this.paused === false) {
+		if (this.paused) {return}
+
 		this.gameElement.innerHTML = '';
 
 		let svg = document.createElementNS(SVG_NS, 'svg');
@@ -70,8 +71,7 @@ export default class Game {
 		this.board.render(svg);
 		this.paddle1.render(svg);
 		this.paddle2.render(svg);
-		this.ball.render(svg);
-		}
+		this.ball.render(svg, this.paddle1, this.paddle2);
 	}
 
 }

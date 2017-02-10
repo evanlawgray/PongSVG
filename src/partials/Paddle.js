@@ -33,7 +33,6 @@ onkeydown = onkeyup = function(event){
           break;
         }
     });
-
   }
 
   moveUP() {
@@ -43,6 +42,14 @@ onkeydown = onkeyup = function(event){
   moveDown(){
     this.y = Math.min((this.y + this.speed), this.boardHeight - this.height);
   }
+
+  coordinates(x, y, width, height) {
+    let leftX = x;
+    let rightX = x + width;
+    let topY = y;
+    let bottomY = y + height;
+  return [leftX, rightX, topY, bottomY];
+}
 
   render(svg) {
     let paddle = document.createElementNS(SVG_NS, 'rect');
