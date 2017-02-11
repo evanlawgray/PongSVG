@@ -8,7 +8,7 @@ export default class Paddle {
     this.x = x;
     this.y = y;
     this.speed = GAMESETTINGS.speed;
-    this.score = GAMESETTINGS.score;
+    this.score = 0;
     this.up = up;
     this.down = down;
     this.paused = false;
