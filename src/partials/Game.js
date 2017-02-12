@@ -56,6 +56,18 @@ export default class Game {
 			this.height
 		);
 
+		this.ball2 = new Ball(
+			GAMESETTINGS.ballRadius,
+			this.width,
+			this.height
+		);
+
+		this.ball3 = new Ball(
+			GAMESETTINGS.ballRadius,
+			this.width,
+			this.height
+			);
+
 		this.player1Score = new Score(this.width / 2 - 70, 40, 40);
 
 		this.player2Score = new Score(this.width /2 + 40, 40, 40);
@@ -79,5 +91,13 @@ export default class Game {
 		this.ball.render(svg, this.paddle1, this.paddle2);
 		this.player1Score.render(svg, this.paddle1.score);
 		this.player2Score.render(svg, this.paddle2.score);
+
+		if (this.paddle1.score >= 5 || this.paddle2.score >= 5) {
+			this.ball2.render(svg, this.paddle1, this.paddle2);
+		}
+		if (this.paddle1.score >= 10 || this.paddle2.score >= 10) {
+			this.ball3.render(svg, this.paddle1, this.paddle2);
+/*			this.ball3.className += ` flashing`;*/
+		}
 	}
 }
