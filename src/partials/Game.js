@@ -12,6 +12,8 @@ export default class Game {
 		this.height = height;
 		this.spaceBar = KEYS.spaceBar;
 		this.paused = false;
+		this.hasWinner = false;
+		this.winner = ``;
 
 		this.boardGap = GAMESETTINGS.boardGap;
 		this.paddleWidth = GAMESETTINGS.paddleWidth;
@@ -97,6 +99,14 @@ export default class Game {
 		}
 		if (this.paddle1.score >= 10 || this.paddle2.score >= 10) {
 			this.ball3.render(svg, this.paddle1, this.paddle2);
+
+		if (this.paddle1.score >= 20) {
+			this.winner = `Player 1`;
+			this.hasWinner = true;
+		} else if (this.paddle2.score >= 20) {
+			this.winner =`Player 2`;
+			this.hasWinner = true;
+		}
 /*
 			let balls = document.getElementsByTagNameNS(SVG_NS, 'circle');
 			

@@ -95,12 +95,18 @@ h1 {
 
  @keyframes flash {
   0% {
+    color: black;
     transform: scale(1);
   }
   50% {
+    color: aquamarine;
     transform: scale(1.2);
   }
+  75% {
+    color: #72e5be;
+  }
   100% {
+    color: black;
     transform: scale(1);
   }
 
