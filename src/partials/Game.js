@@ -97,7 +97,12 @@ export default class Game {
 		}
 		if (this.paddle1.score >= 10 || this.paddle2.score >= 10) {
 			this.ball3.render(svg, this.paddle1, this.paddle2);
-/*			this.ball3.className += ` flashing`;*/
+/*
+			let balls = document.getElementsByTagNameNS(SVG_NS, 'circle');
+			
+			for (let i = 0; i < balls.length; i++) {
+				balls[i].setAttributeNS(SVG_NS, 'class', 'flashing');
+			}*/
 		}
 	}
 }
