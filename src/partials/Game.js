@@ -111,8 +111,13 @@ export default class Game {
 			let balls = document.getElementsByTagNameNS(SVG_NS, 'circle');
 			
 			for (let i = 0; i < balls.length; i++) {
-				balls[i].setAttributeNS(SVG_NS, 'class', 'flashing');
+				let animate = document.createElementNS(SVG_NS, 'animate');
+
+				balls[i].appendChild(animate);
+				animate.setAttributeNS(null, )
 			}*/
+
+
 		}
 	}
 }

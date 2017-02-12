@@ -58,8 +58,15 @@
 	var game = new _Game2.default('game', 512, 256);
 
 	(function gameLoop() {
-	    game.render();
-	    requestAnimationFrame(gameLoop);
+
+		if (game.hasWinner === true) {
+			var mainHeader = document.getElementById("main-header");
+			mainHeader.innerHTML = 'Winner : ' + game.winner + '!';
+			mainHeader.className = 'flashing';
+			return;
+		}
+		game.render();
+		requestAnimationFrame(gameLoop);
 	})();
 
 /***/ },
@@ -97,7 +104,7 @@
 
 
 	// module
-	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed, \nfigure, figcaption, footer, header, hgroup, \nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n\tvertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, \nfooter, header, hgroup, menu, nav, section {\n\tdisplay: block;\n}\nbody {\n\tline-height: 1;\n}\nol, ul {\n\tlist-style: none;\n}\nblockquote, q {\n\tquotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n\tcontent: '';\n\tcontent: none;\n}\ntable {\n\tborder-collapse: collapse;\n\tborder-spacing: 0;\n}\n\n/**\n * FONTS\n */\n\n@font-face {\n  font-family: 'Silkscreen Web';\n  src: url(" + __webpack_require__(4) + ");\n  src: url(" + __webpack_require__(4) + "?#iefix) format('embedded-opentype'),\n    url(" + __webpack_require__(5) + ") format('woff'),\n    url(" + __webpack_require__(6) + ") format('truetype'),\n    url(" + __webpack_require__(7) + "#silkscreennormal) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n\n/**\n * GAME\n */\n\nhtml {\n  font-size: 16px;\n}\n\nbody {\n  align-items: center;\n  display: flex;\n  font-family: 'Silkscreen Web', monotype;\n  height: 100vh;\n  justify-content: center;\n  width: 100%;\n}\n\nh1 {\n  font-size: 2.5rem;\n  margin-bottom: 1rem; \n  text-align: center;\n}\n\n/**\n * BALLS\n */\n\n .flashing {\n  animation: flash 1s linear infinite;\n }\n\n @keyframes flash {\n  0% {\n    transform: scale(1);\n  }\n  50% {\n    transform: scale(1.2);\n  }\n  100% {\n    transform: scale(1);\n  }\n\n\n }\n", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed, \nfigure, figcaption, footer, header, hgroup, \nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n\tvertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, \nfooter, header, hgroup, menu, nav, section {\n\tdisplay: block;\n}\nbody {\n\tline-height: 1;\n}\nol, ul {\n\tlist-style: none;\n}\nblockquote, q {\n\tquotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n\tcontent: '';\n\tcontent: none;\n}\ntable {\n\tborder-collapse: collapse;\n\tborder-spacing: 0;\n}\n\n/**\n * FONTS\n */\n\n@font-face {\n  font-family: 'Silkscreen Web';\n  src: url(" + __webpack_require__(4) + ");\n  src: url(" + __webpack_require__(4) + "?#iefix) format('embedded-opentype'),\n    url(" + __webpack_require__(5) + ") format('woff'),\n    url(" + __webpack_require__(6) + ") format('truetype'),\n    url(" + __webpack_require__(7) + "#silkscreennormal) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n\n/**\n * GAME\n */\n\nhtml {\n  font-size: 16px;\n}\n\nbody {\n  align-items: center;\n  display: flex;\n  font-family: 'Silkscreen Web', monotype;\n  height: 100vh;\n  justify-content: center;\n  width: 100%;\n}\n\nh1 {\n  font-size: 2.5rem;\n  margin-bottom: 1rem; \n  text-align: center;\n}\n\n/**\n * BALLS\n */\n\n .flashing {\n  animation: flash 1s linear infinite;\n }\n\n @keyframes flash {\n  0% {\n    color: black;\n    transform: scale(1);\n  }\n  50% {\n    color: aquamarine;\n    transform: scale(1.2);\n  }\n  75% {\n    color: #72e5be;\n  }\n  100% {\n    color: black;\n    transform: scale(1);\n  }\n\n\n }\n", ""]);
 
 	// exports
 
@@ -479,6 +486,8 @@
 			this.height = height;
 			this.spaceBar = _settings.KEYS.spaceBar;
 			this.paused = false;
+			this.hasWinner = false;
+			this.winner = '';
 
 			this.boardGap = _settings.GAMESETTINGS.boardGap;
 			this.paddleWidth = _settings.GAMESETTINGS.paddleWidth;
@@ -540,11 +549,22 @@
 				}
 				if (this.paddle1.score >= 10 || this.paddle2.score >= 10) {
 					this.ball3.render(svg, this.paddle1, this.paddle2);
+
+					if (this.paddle1.score >= 20) {
+						this.winner = 'Player 1';
+						this.hasWinner = true;
+					} else if (this.paddle2.score >= 20) {
+						this.winner = 'Player 2';
+						this.hasWinner = true;
+					}
 					/*
 	    			let balls = document.getElementsByTagNameNS(SVG_NS, 'circle');
 	    			
 	    			for (let i = 0; i < balls.length; i++) {
-	    				balls[i].setAttributeNS(SVG_NS, 'class', 'flashing');
+	    				let animate = document.createElementNS(SVG_NS, 'animate');
+	    
+	    				balls[i].appendChild(animate);
+	    				animate.setAttributeNS(null, )
 	    			}*/
 				}
 			}
@@ -855,10 +875,10 @@
 
 	      if (rightGoal) {
 	        this.scoreGoal(paddle1);
-	        this.direction = 1;
+	        this.direction = -1;
 	      } else if (leftGoal) {
 	        this.scoreGoal(paddle2);
-	        this.direction = -1;
+	        this.direction = 1;
 	      }
 	    }
 	  }]);
