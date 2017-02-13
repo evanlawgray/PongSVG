@@ -15,20 +15,26 @@ module.exports = {
 	},
 	output: {
 		path: __dirname,
-		filename: 'build/bundle.js'
+		filename: './build/bundle.js'
 	},
 	module: {
 		loaders: [
 			{
 				test: /\.css$/,
 				loaders: ['style', 'css'],
-				include: PATHS.src
-			}, {
+				include: PATHS.src,
+			},
+			{
+				test: /\.(jpe?g|gif|png)$/,
+     			loader: 'file-loader?emitFile=false&name=[path][name].[ext]'
+    		},
+    		{
 				test: /\.js$/,
 				loaders: ['babel', 'eslint'],
 				include: PATHS.src,
 				exclude: /node_modules/
-			}, {
+			},
+			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
 				loader: 'file?name=public/fonts/[name].[ext]'
 			}

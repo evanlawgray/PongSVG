@@ -12,6 +12,6 @@ const game = new Game('game', 512, 256);
 		mainHeader.className = `flashing`;
 		return;
 	}
-    game.render();
-    requestAnimationFrame(gameLoop);
+	game.render();
+	requestAnimationFrame(gameLoop);
 })();

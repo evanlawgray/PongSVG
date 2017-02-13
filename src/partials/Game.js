@@ -1,4 +1,8 @@
-import {SVG_NS, KEYS, GAMESETTINGS} from '../settings';
+import {
+	SVG_NS,
+	KEYS,
+	GAMESETTINGS
+} from '../settings';
 import Board from './Board';
 import Paddle from './Paddle';
 import Ball from './Ball';
@@ -18,26 +22,26 @@ export default class Game {
 		this.boardGap = GAMESETTINGS.boardGap;
 		this.paddleWidth = GAMESETTINGS.paddleWidth;
 		this.paddleHeight = GAMESETTINGS.paddleHeight;
-	
+
 		this.gameElement = document.getElementById(this.element);
 
 		document.addEventListener('keydown', event => {
 
 			switch (event.keyCode) {
-        		case this.spaceBar:
-         			this.paused = !this.paused;
-          		break;
-        	}
+				case this.spaceBar:
+					this.paused = !this.paused;
+					break;
+			}
 		});
 
 		this.board = new Board(this.width, this.height);
 
 		this.paddle1 = new Paddle(
 			this.height,
-			this.paddleWidth, 
+			this.paddleWidth,
 			this.paddleHeight,
 			this.boardGap,
-			((this.height - this.paddleHeight)/2),
+			((this.height - this.paddleHeight) / 2),
 			KEYS.a,
 			KEYS.z
 		);
@@ -45,9 +49,9 @@ export default class Game {
 		this.paddle2 = new Paddle(
 			this.height,
 			this.paddleWidth,
-			this.paddleHeight, 
+			this.paddleHeight,
 			(this.width - this.boardGap - this.paddleWidth),
-			((this.height - this.paddleHeight)/2),
+			((this.height - this.paddleHeight) / 2),
 			KEYS.up,
 			KEYS.down
 		);
@@ -68,16 +72,18 @@ export default class Game {
 			GAMESETTINGS.ballRadius,
 			this.width,
 			this.height
-			);
+		);
 
 		this.player1Score = new Score(this.width / 2 - 70, 40, 40);
 
-		this.player2Score = new Score(this.width /2 + 40, 40, 40);
+		this.player2Score = new Score(this.width / 2 + 40, 40, 40);
 	}
 
 	render() {
 
-		if (this.paused) {return}
+		if (this.paused) {
+			return
+		}
 
 		this.gameElement.innerHTML = '';
 
@@ -100,22 +106,22 @@ export default class Game {
 		if (this.paddle1.score >= 10 || this.paddle2.score >= 10) {
 			this.ball3.render(svg, this.paddle1, this.paddle2);
 
-		if (this.paddle1.score >= 20) {
-			this.winner = `Player 1`;
-			this.hasWinner = true;
-		} else if (this.paddle2.score >= 20) {
-			this.winner =`Player 2`;
-			this.hasWinner = true;
-		}
-/*
-			let balls = document.getElementsByTagNameNS(SVG_NS, 'circle');
-			
-			for (let i = 0; i < balls.length; i++) {
-				let animate = document.createElementNS(SVG_NS, 'animate');
+			if (this.paddle1.score >= 20) {
+				this.winner = `Player 1`;
+				this.hasWinner = true;
+			} else if (this.paddle2.score >= 20) {
+				this.winner = `Player 2`;
+				this.hasWinner = true;
+			}
+			/*
+						let balls = document.getElementsByTagNameNS(SVG_NS, 'circle');
+						
+						for (let i = 0; i < balls.length; i++) {
+							let animate = document.createElementNS(SVG_NS, 'animate');
 
-				balls[i].appendChild(animate);
-				animate.setAttributeNS(null, )
-			}*/
+							balls[i].appendChild(animate);
+							animate.setAttributeNS(null, )
+						}*/
 
 
 		}
