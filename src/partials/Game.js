@@ -100,11 +100,53 @@ export default class Game {
 		this.player1Score.render(svg, this.paddle1.score);
 		this.player2Score.render(svg, this.paddle2.score);
 
+
 		if (this.paddle1.score >= 5 || this.paddle2.score >= 5) {
+
+			let newVectorY = Math.floor(Math.random() * 4 - 2);
+			let newVectorX = this.ball2.direction * (3 - Math.abs(this.ball2.vy));
+
 			this.ball2.render(svg, this.paddle1, this.paddle2);
+
+			this.ball2.reset = function() {
+				this.x = this.boardWidth / 2;
+				this.y = this.boardHeight / 2;
+
+				this.vy = 0;
+
+				while (this.vy === 0) {
+
+					this.vy = Math.floor(Math.random() * 4 - 2);
+				}
+
+
+				this.vx = newVectorX;
+
+			}
+
 		}
 		if (this.paddle1.score >= 10 || this.paddle2.score >= 10) {
+
+			let newVectorY = Math.floor(Math.random() * 4 - 2);
+			let newVectorX = this.ball2.direction * (3 - Math.abs(this.ball2.vy));
+
 			this.ball3.render(svg, this.paddle1, this.paddle2);
+
+			this.ball3.reset = function() {
+				this.x = this.boardWidth / 2;
+				this.y = this.boardHeight / 2;
+
+				this.vy = 0;
+
+				while (this.vy === 0) {
+
+					this.vy = Math.floor(Math.random() * 4 - 2);
+				}
+
+
+				this.vx = newVectorX;
+
+			}
 
 			if (this.paddle1.score >= 20) {
 				this.winner = `Player 1`;
@@ -113,17 +155,6 @@ export default class Game {
 				this.winner = `Player 2`;
 				this.hasWinner = true;
 			}
-			/*
-						let balls = document.getElementsByTagNameNS(SVG_NS, 'circle');
-						
-						for (let i = 0; i < balls.length; i++) {
-							let animate = document.createElementNS(SVG_NS, 'animate');
-
-							balls[i].appendChild(animate);
-							animate.setAttributeNS(null, )
-						}*/
-
-
 		}
 	}
 }

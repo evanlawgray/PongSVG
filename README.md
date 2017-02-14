@@ -26,6 +26,7 @@ A basic pong game using SVGs.
 
 * 1: Add multiple balls when player score exceeds 5. (score:5 -- balls: 2; score: 10 -- balls: 3)
 * 2: Stop the game when a player's score reaches 20 and declare that player the winner ("Pong" in h1 is replaced by "Winner : [winning player]" with a color/scale changing animation).
+* 3: Make the second and third balls travel slower than the the first one. This helps to smooth out the difficulty curve and prevent games from ending to soon after multiple balls are introduced.
 
 ## Learning Outcomes
 
