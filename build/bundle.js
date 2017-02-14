@@ -554,10 +554,10 @@
 				if (this.paddle1.score >= 5 || this.paddle2.score >= 5) {
 					(function () {
 
-						_this2.ball2.render(svg, _this2.paddle1, _this2.paddle2);
+						var newVectorY = Math.floor(Math.random() * 8 - 4);
+						var newVectorX = _this2.ball2.direction * (5 - Math.abs(_this2.ball2.vy));
 
-						var newVectorY = Math.floor(Math.random() * 4 - 2);
-						var newVectorX = _this2.ball2.direction * (3 - Math.abs(_this2.ball2.vy));
+						_this2.ball2.render(svg, _this2.paddle1, _this2.paddle2);
 
 						_this2.ball2.reset = function () {
 							this.x = this.boardWidth / 2;
@@ -574,24 +574,37 @@
 						};
 					})();
 				}
-				if (this.paddle1.score >= 10 || this.paddle2.score >= 10) {
-					this.ball3.render(svg, this.paddle1, this.paddle2);
 
-					if (this.paddle1.score >= 20) {
-						this.winner = 'Player 1';
-						this.hasWinner = true;
-					} else if (this.paddle2.score >= 20) {
-						this.winner = 'Player 2';
-						this.hasWinner = true;
-					}
-					/*
-	    			let balls = document.getElementsByTagNameNS(SVG_NS, 'circle');
-	    			
-	    			for (let i = 0; i < balls.length; i++) {
-	    				let animate = document.createElementNS(SVG_NS, 'animate');
-	    					balls[i].appendChild(animate);
-	    				animate.setAttributeNS(null, )
-	    			}*/
+				if (this.paddle1.score >= 10 || this.paddle2.score >= 10) {
+					(function () {
+
+						var newVectorY = Math.floor(Math.random() * 4 - 2);
+						var newVectorX = _this2.ball2.direction * (3 - Math.abs(_this2.ball2.vy));
+
+						_this2.ball3.render(svg, _this2.paddle1, _this2.paddle2);
+
+						_this2.ball3.reset = function () {
+							this.x = this.boardWidth / 2;
+							this.y = this.boardHeight / 2;
+
+							this.vy = 0;
+
+							while (this.vy === 0) {
+
+								this.vy = Math.floor(Math.random() * 4 - 2);
+							}
+
+							this.vx = newVectorX;
+						};
+
+						if (_this2.paddle1.score >= 20) {
+							_this2.winner = 'Player 1';
+							_this2.hasWinner = true;
+						} else if (_this2.paddle2.score >= 20) {
+							_this2.winner = 'Player 2';
+							_this2.hasWinner = true;
+						}
+					})();
 				}
 			}
 		}]);

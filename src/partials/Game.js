@@ -17,7 +17,7 @@ export default class Game {
 		this.spaceBar = KEYS.spaceBar;
 		this.paused = false;
 		this.hasWinner = false;
-		this.winner = ``;
+		this.winner = '';
 
 		this.boardGap = GAMESETTINGS.boardGap;
 		this.paddleWidth = GAMESETTINGS.paddleWidth;
@@ -103,8 +103,8 @@ export default class Game {
 
 		if (this.paddle1.score >= 5 || this.paddle2.score >= 5) {
 
-			let newVectorY = Math.floor(Math.random() * 4 - 2);
-			let newVectorX = this.ball2.direction * (3 - Math.abs(this.ball2.vy));
+			let newVectorY = Math.floor(Math.random() * 6 - 3);
+			let newVectorX = this.ball2.direction * (4 - Math.abs(this.ball2.vy));
 
 			this.ball2.render(svg, this.paddle1, this.paddle2);
 
@@ -116,7 +116,7 @@ export default class Game {
 
 				while (this.vy === 0) {
 
-					this.vy = Math.floor(Math.random() * 4 - 2);
+					this.vy = Math.floor(Math.random() * 6 - 3);
 				}
 
 
@@ -125,10 +125,11 @@ export default class Game {
 			}
 
 		}
+
 		if (this.paddle1.score >= 10 || this.paddle2.score >= 10) {
 
-			let newVectorY = Math.floor(Math.random() * 4 - 2);
-			let newVectorX = this.ball2.direction * (3 - Math.abs(this.ball2.vy));
+			let newVectorY = Math.floor(Math.random() * 6 - 3);
+			let newVectorX = this.ball2.direction * (4 - Math.abs(this.ball3.vy));
 
 			this.ball3.render(svg, this.paddle1, this.paddle2);
 
@@ -140,19 +141,17 @@ export default class Game {
 
 				while (this.vy === 0) {
 
-					this.vy = Math.floor(Math.random() * 4 - 2);
+					this.vy = Math.floor(Math.random() * 6 - 3);
 				}
 
-
 				this.vx = newVectorX;
-
 			}
 
 			if (this.paddle1.score >= 20) {
-				this.winner = `Player 1`;
+				this.winner = 'Player 1';
 				this.hasWinner = true;
 			} else if (this.paddle2.score >= 20) {
-				this.winner = `Player 2`;
+				this.winner = 'Player 2';
 				this.hasWinner = true;
 			}
 		}
