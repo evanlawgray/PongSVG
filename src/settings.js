@@ -6,6 +6,8 @@ export const KEYS = {
 	up: 38, // player 2 up key
 	down: 40, // player 2 down key
 	spaceBar: 32, // Pauses the game
+	player1Fire: 83,
+	player2Fire: 191
 }
 
 export const GAMESETTINGS = {

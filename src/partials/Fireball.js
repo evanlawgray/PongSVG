@@ -2,34 +2,40 @@ import {
   SVG_NS
 } from '../settings';
 
-export default class ExtraBall {
-  constructor( radius, boardWidth, boardHeight ) {
+export default class Fireball {
+  constructor( radius, boardWidth, boardHeight, aggressor ) {
     this.radius = radius;
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
-    this.direction = 1;
-    this.reset();
+    
+    if (aggressor === 'player1') {
+      this.direction = 1;
+    } else if (aggressor === 'player2') {
+      this.direction = -1;
+    }
 
+    this.fire();
     this.ping = new Audio( '../public/sounds/pong-03.wav' );
   }
 
-  reset() {
+  fire() {
     this.x = this.boardWidth / 2;
-      this.y = this.boardHeight / 2;
+    this.y = this.boardHeight / 2;
 
-      this.vy = 0;
+    this.vy = 0;
 
-      while ( this.vy === 0 ) {
+    while ( this.vy === 0 ) {
 
-        this.vy = Math.floor( Math.random() * 6 - 3 );
-      }
+      //Generates a number between -5 and 5
+      this.vy = Math.floor( Math.random() * 10 - 5 );
+    }
 
-      this.vx = this.direction * ( 4 - Math.abs( this.vy ));
+    this.vx = this.direction * ( 6 - Math.abs( this.vy ));
   }
 
-  scoreGoal( player ) {
-    player.score++;
-    this.reset();
+  leaveBoard() {
+    this.radius = 0;
+    this.direction = 0;
   }
 
   wallCollision() {
@@ -84,24 +90,22 @@ export default class ExtraBall {
     this.x += this.vx;
     this.y += this.vy;
 
-    let ball = document.createElementNS( SVG_NS, 'circle' );
+    let fireball = document.createElementNS( SVG_NS, 'circle' );
 
-    ball.setAttributeNS( null, 'cx', this.x );
-    ball.setAttributeNS( null, 'cy', this.y );
-    ball.setAttributeNS( null, 'r', this.radius );
-    ball.setAttributeNS( null, 'fill', 'white' );
+    fireball.setAttributeNS( null, 'cx', this.x );
+    fireball.setAttributeNS( null, 'cy', this.y );
+    fireball.setAttributeNS( null, 'r', this.radius );
+    fireball.setAttributeNS( null, 'fill', 'red' );
 
-    svg.appendChild( ball );
+    svg.appendChild( fireball );
 
-    const rightGoal = this.x + this.radius >= this.boardWidth;
-    const leftGoal = this.x - this.radius <= 0;
+    const hitRightWall = this.x + this.radius >= this.boardWidth;
+    const hitLeftWall = this.x - this.radius <= 0;
 
-    if ( rightGoal ) {
-      this.direction = -1;
-      this.scoreGoal( paddle1 );
-    } else if ( leftGoal ) {
-      this.direction = 1;
-      this.scoreGoal( paddle2 );
+    if ( hitRightWall ) {
+      this.leaveBoard();
+    } else if ( hitLeftWall ) {
+      this.leaveBoard();
     }
   }
 }

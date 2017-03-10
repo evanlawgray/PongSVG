@@ -7,6 +7,7 @@ import Board from './Board';
 import Paddle from './Paddle';
 import Ball from './Ball';
 import ExtraBall from './Extra-Ball';
+import Fireball from './Fireball';
 import Score from './Score';
 
 export default class Game {
@@ -24,14 +25,24 @@ export default class Game {
 		this.paddleWidth = GAMESETTINGS.paddleWidth;
 		this.paddleHeight = GAMESETTINGS.paddleHeight;
 
+		this.fireballs = [];
+		this.fireballCount = 0;
+
 		this.gameElement = document.getElementById( this.element );
 
 		document.addEventListener( 'keydown', event => {
 
-			switch (event.keyCode) {
+			console.log(event.keyCode);
+
+			switch ( event.keyCode ) {
 				case this.spaceBar:
 					this.paused = !this.paused;
 					break;
+				case KEYS.player1Fire:
+					this.makeFireball('player1');
+					break;
+				case KEYS.player2Fire:
+					this.makeFireball('player2');
 			}
 		});
 
@@ -50,6 +61,16 @@ export default class Game {
 		this.player1Score = new Score( this.width / 2 - 70, 40, 40 );
 
 		this.player2Score = new Score( this.width / 2 + 40, 40, 40 );
+	}
+
+	makeFireball(aggressor) {
+		let firedBy = aggressor;
+		this.fireballCount++;
+		this.fireballs[this.fireballCount] = new Fireball(
+			GAMESETTINGS.ballRadius,
+			this.width,
+			this.height,
+			firedBy);
 	}
 
 	makePaddle1() {
@@ -118,6 +139,13 @@ export default class Game {
 		this.ball1.render( svg, this.paddle1, this.paddle2 );
 		this.player1Score.render( svg, this.paddle1.score );
 		this.player2Score.render( svg, this.paddle2.score );
+
+		if ( !( this.fireballs === [] ) && !( this.fireballCount === 0 )) {
+
+			for (var i = 1 ; i <= this.fireballCount; i++) {
+				this.fireballs[i].render ( svg, this.paddle1, this.paddle2 );
+			}
+		}
 
 
 		if ( this.paddle1.score >= 5 || this.paddle2.score >= 5 ) {
