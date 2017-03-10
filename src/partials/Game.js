@@ -11,6 +11,47 @@ import Score from './Score';
 
 export default class Game {
 
+	constructor( element, width, height ) {
+		this.element = element;
+		this.width = width;
+		this.height = height;
+		this.spaceBar = KEYS.spaceBar;
+		this.paused = false;
+		this.hasWinner = false;
+		this.winner = '';
+
+		this.boardGap = GAMESETTINGS.boardGap;
+		this.paddleWidth = GAMESETTINGS.paddleWidth;
+		this.paddleHeight = GAMESETTINGS.paddleHeight;
+
+		this.gameElement = document.getElementById( this.element );
+
+		document.addEventListener( 'keydown', event => {
+
+			switch (event.keyCode) {
+				case this.spaceBar:
+					this.paused = !this.paused;
+					break;
+			}
+		});
+
+		this.board = new Board( this.width, this.height );
+
+		this.makePaddle1();
+
+		this.makePaddle2();
+
+		this.makeBall1();
+
+		this.makeBall2();
+
+		this.makeBall3();
+
+		this.player1Score = new Score( this.width / 2 - 70, 40, 40 );
+
+		this.player2Score = new Score( this.width / 2 + 40, 40, 40 );
+	}
+
 	makePaddle1() {
 		this.paddle1 = new Paddle(
 			this.height,
@@ -57,47 +98,6 @@ export default class Game {
 		);
 	}
 
-	constructor(element, width, height) {
-		this.element = element;
-		this.width = width;
-		this.height = height;
-		this.spaceBar = KEYS.spaceBar;
-		this.paused = false;
-		this.hasWinner = false;
-		this.winner = '';
-
-		this.boardGap = GAMESETTINGS.boardGap;
-		this.paddleWidth = GAMESETTINGS.paddleWidth;
-		this.paddleHeight = GAMESETTINGS.paddleHeight;
-
-		this.gameElement = document.getElementById(this.element);
-
-		document.addEventListener('keydown', event => {
-
-			switch (event.keyCode) {
-				case this.spaceBar:
-					this.paused = !this.paused;
-					break;
-			}
-		});
-
-		this.board = new Board(this.width, this.height);
-
-		this.makePaddle1();
-
-		this.makePaddle2();
-
-		this.makeBall1();
-
-		this.makeBall2();
-
-		this.makeBall3();
-
-		this.player1Score = new Score( this.width / 2 - 70, 40, 40 );
-
-		this.player2Score = new Score( this.width / 2 + 40, 40, 40 );
-	}
-
 	render() {
 
 		if ( this.paused ) {
@@ -131,9 +131,12 @@ export default class Game {
 		}
 
 		if ( this.paddle1.score >= 20 ) {
-				this.winner = 'Player 1';
-				this.hasWinner = true;
+
+			this.winner = 'Player 1';
+			this.hasWinner = true;
+
 		} else if ( this.paddle2.score >= 20 ) {
+
 			this.winner = 'Player 2';
 			this.hasWinner = true;
 		}

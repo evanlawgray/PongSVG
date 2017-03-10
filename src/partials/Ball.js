@@ -3,7 +3,7 @@ import {
 } from '../settings';
 
 export default class Ball {
-  constructor(radius, boardWidth, boardHeight) {
+  constructor( radius, boardWidth, boardHeight ) {
     this.radius = radius;
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
@@ -11,7 +11,7 @@ export default class Ball {
     this.reset();
     this.speedGovernor = 10;
 
-    this.ping = new Audio('../public/sounds/pong-03.wav');
+    this.ping = new Audio( '../public/sounds/pong-03.wav' );
   }
 
   reset() {
@@ -20,16 +20,16 @@ export default class Ball {
 
     this.vy = 0;
 
-    while (this.vy === 0) {
+    while ( this.vy === 0 ) {
 
       //Generates a number between -5 and 5
-      this.vy = Math.floor(Math.random() * 10 - 5);
+      this.vy = Math.floor( Math.random() * 10 - 5 );
     }
 
-    this.vx = this.direction * (6 - Math.abs(this.vy));
+    this.vx = this.direction * ( 6 - Math.abs( this.vy ));
   }
 
-  scoreGoal(player) {
+  scoreGoal( player ) {
     player.score++;
     this.reset();
   }
@@ -40,17 +40,17 @@ export default class Ball {
     const hitTop = this.y - this.radius <= 0;
     const hitBottom = this.y + this.radius >= this.boardHeight;
 
-    if (hitLeft || hitRight) {
+    if ( hitLeft || hitRight ) {
       this.vx = -this.vx;
-    } else if (hitTop || hitBottom) {
+    } else if ( hitTop || hitBottom ) {
       this.vy = -this.vy;
     }
   }
 
-  paddleCollision(player1, player2) {
-    if (this.vx > 0) {
+  paddleCollision( player1, player2 ) {
+    if ( this.vx > 0 ) {
 
-      let paddle = player2.coordinates(player2.x, player2.y, player2.width, player2.height);
+      let paddle = player2.coordinates( player2.x, player2.y, player2.width, player2.height );
       let [leftX, rightX, topY, bottomY] = paddle;
 
       if (
@@ -64,7 +64,7 @@ export default class Ball {
 
     } else {
 
-      let paddle = player1.coordinates(player1.x, player1.y, player1.width, player1.height);
+      let paddle = player1.coordinates( player1.x, player1.y, player1.width, player1.height );
       let [leftX, rightX, topY, bottomY] = paddle;
 
       if (
@@ -78,32 +78,32 @@ export default class Ball {
     }
   }
 
-  render(svg, paddle1, paddle2) {
+  render( svg, paddle1, paddle2 ) {
 
     this.wallCollision();
-    this.paddleCollision(paddle1, paddle2);
+    this.paddleCollision( paddle1, paddle2 );
 
     this.x += this.vx;
     this.y += this.vy;
 
-    let ball = document.createElementNS(SVG_NS, 'circle');
+    let ball = document.createElementNS( SVG_NS, 'circle' );
 
-    ball.setAttributeNS(null, 'cx', this.x);
-    ball.setAttributeNS(null, 'cy', this.y);
-    ball.setAttributeNS(null, 'r', this.radius);
-    ball.setAttributeNS(null, 'fill', 'white');
+    ball.setAttributeNS( null, 'cx', this.x );
+    ball.setAttributeNS( null, 'cy', this.y );
+    ball.setAttributeNS( null, 'r', this.radius );
+    ball.setAttributeNS( null, 'fill', 'white' );
 
-    svg.appendChild(ball);
+    svg.appendChild( ball );
 
     const rightGoal = this.x + this.radius >= this.boardWidth;
     const leftGoal = this.x - this.radius <= 0;
 
-    if (rightGoal) {
+    if ( rightGoal ) {
       this.direction = -1;
-      this.scoreGoal(paddle1);
-    } else if (leftGoal) {
+      this.scoreGoal( paddle1 );
+    } else if ( leftGoal ) {
       this.direction = 1;
-      this.scoreGoal(paddle2);
+      this.scoreGoal( paddle2 );
     }
   }
 }
