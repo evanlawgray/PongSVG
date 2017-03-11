@@ -7,10 +7,11 @@ export default class Fireball {
     this.radius = radius;
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
+    this.aggressor = aggressor;
     
-    if (aggressor === 'player1') {
+    if (aggressor.x < 290) {
       this.direction = 1;
-    } else if (aggressor === 'player2') {
+    } else if (aggressor.x > 291) {
       this.direction = -1;
     }
 
@@ -19,16 +20,16 @@ export default class Fireball {
   }
 
   fire() {
-    this.x = this.boardWidth / 2;
-    this.y = this.boardHeight / 2;
+
+    if (this.aggressor.x < 290) {
+      this.x = this.aggressor.x + (this.aggressor.width +1);
+    } else {
+      this.x = this.aggressor.x - (this.aggressor.width - 1);
+    }
+
+    this.y = this.aggressor.y + ( this.aggressor.height / 2 );
 
     this.vy = 0;
-
-    while ( this.vy === 0 ) {
-
-      //Generates a number between -5 and 5
-      this.vy = Math.floor( Math.random() * 10 - 5 );
-    }
 
     this.vx = this.direction * ( 6 - Math.abs( this.vy ));
   }
@@ -36,6 +37,8 @@ export default class Fireball {
   leaveBoard() {
     this.radius = 0;
     this.direction = 0;
+    this.x = 290;
+    this.y = -10
   }
 
   wallCollision() {
@@ -62,8 +65,13 @@ export default class Fireball {
         this.x + this.radius <= rightX &&
         this.y + this.radius >= topY && this.y - this.radius <= bottomY
       ) {
-        this.vx = -this.vx;
-        this.ping.play();
+
+        if (player2.height > 30) {
+
+          console.log(this.pl)
+          player2.height = player2.height - 2;
+          this.leaveBoard();
+        }
       }
 
     } else {
@@ -76,8 +84,11 @@ export default class Fireball {
         this.x - this.radius >= leftX &&
         this.y + this.radius >= topY && this.y - this.radius <= bottomY
       ) {
-        this.vx = -this.vx;
-        this.ping.play();
+
+        if (player1.height > 30) {
+          player1.height = player1.height - 2;
+          this.leaveBoard();
+        }
       }
     }
   }

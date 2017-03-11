@@ -15,16 +15,16 @@ export default class ExtraBall {
 
   reset() {
     this.x = this.boardWidth / 2;
-      this.y = this.boardHeight / 2;
+    this.y = this.boardHeight / 2;
 
-      this.vy = 0;
+    this.vy = 0;
 
-      while ( this.vy === 0 ) {
+    while ( this.vy === 0 ) {
 
-        this.vy = Math.floor( Math.random() * 6 - 3 );
-      }
+      this.vy = Math.floor( Math.random() * 6 - 3 );
+    }
 
-      this.vx = this.direction * ( 4 - Math.abs( this.vy ));
+    this.vx = this.direction * ( 4 - Math.abs( this.vy ));
   }
 
   scoreGoal( player ) {

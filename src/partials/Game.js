@@ -32,17 +32,15 @@ export default class Game {
 
 		document.addEventListener( 'keydown', event => {
 
-			console.log(event.keyCode);
-
 			switch ( event.keyCode ) {
 				case this.spaceBar:
 					this.paused = !this.paused;
 					break;
 				case KEYS.player1Fire:
-					this.makeFireball('player1');
+					this.makeFireball(this.paddle1);
 					break;
 				case KEYS.player2Fire:
-					this.makeFireball('player2');
+					this.makeFireball(this.paddle2);
 			}
 		});
 

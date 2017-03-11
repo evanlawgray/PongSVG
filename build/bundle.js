@@ -514,17 +514,15 @@
 
 			document.addEventListener('keydown', function (event) {
 
-				console.log(event.keyCode);
-
 				switch (event.keyCode) {
 					case _this.spaceBar:
 						_this.paused = !_this.paused;
 						break;
 					case _settings.KEYS.player1Fire:
-						_this.makeFireball('player1');
+						_this.makeFireball(_this.paddle1);
 						break;
 					case _settings.KEYS.player2Fire:
-						_this.makeFireball('player2');
+						_this.makeFireball(_this.paddle2);
 				}
 			});
 
@@ -548,8 +546,9 @@
 		_createClass(Game, [{
 			key: 'makeFireball',
 			value: function makeFireball(aggressor) {
+				var firedBy = aggressor;
 				this.fireballCount++;
-				this.fireballs[this.fireballCount] = new _Fireball2.default(_settings.GAMESETTINGS.ballRadius, this.width, this.height, aggressor);
+				this.fireballs[this.fireballCount] = new _Fireball2.default(_settings.GAMESETTINGS.ballRadius, this.width, this.height, firedBy);
 			}
 		}, {
 			key: 'makePaddle1',
@@ -799,6 +798,7 @@
 		}, {
 			key: 'render',
 			value: function render(svg) {
+
 				var paddle = document.createElementNS(_settings.SVG_NS, 'rect');
 				paddle.setAttributeNS(null, 'width', this.width);
 				paddle.setAttributeNS(null, 'height', this.height);
@@ -1113,31 +1113,41 @@
 	    this.radius = radius;
 	    this.boardWidth = boardWidth;
 	    this.boardHeight = boardHeight;
-	    this.direction = 1;
-	    this.fire();
+	    this.aggressor = aggressor;
 
-	    if (aggressor === 'player2') {
+	    if (aggressor.x < 290) {
+	      this.direction = 1;
+	    } else if (aggressor.x > 291) {
 	      this.direction = -1;
 	    }
 
+	    this.fire();
 	    this.ping = new Audio('../public/sounds/pong-03.wav');
 	  }
 
 	  _createClass(Fireball, [{
 	    key: 'fire',
 	    value: function fire() {
-	      this.x = this.boardWidth / 2;
-	      this.y = this.boardHeight / 2;
+
+	      if (this.aggressor.x < 290) {
+	        this.x = this.aggressor.x + (this.aggressor.width + 1);
+	      } else {
+	        this.x = this.aggressor.x - (this.aggressor.width - 1);
+	      }
+
+	      this.y = this.aggressor.y + this.aggressor.height / 2;
 
 	      this.vy = 0;
 
-	      while (this.vy === 0) {
-
-	        //Generates a number between -5 and 5
-	        this.vy = Math.floor(Math.random() * 10 - 5);
-	      }
-
 	      this.vx = this.direction * (6 - Math.abs(this.vy));
+	    }
+	  }, {
+	    key: 'leaveBoard',
+	    value: function leaveBoard() {
+	      this.radius = 0;
+	      this.direction = 0;
+	      this.x = 290;
+	      this.y = -10;
 	    }
 	  }, {
 	    key: 'wallCollision',
@@ -1167,8 +1177,13 @@
 	            bottomY = _paddle[3];
 
 	        if (this.x + this.radius >= leftX && this.x + this.radius <= rightX && this.y + this.radius >= topY && this.y - this.radius <= bottomY) {
-	          this.vx = -this.vx;
-	          this.ping.play();
+
+	          if (player2.height > 30) {
+
+	            console.log(this.pl);
+	            player2.height = player2.height - 2;
+	            this.leaveBoard();
+	          }
 	        }
 	      } else {
 
@@ -1181,8 +1196,11 @@
 	            _bottomY = _paddle3[3];
 
 	        if (this.x - this.radius <= _rightX && this.x - this.radius >= _leftX && this.y + this.radius >= _topY && this.y - this.radius <= _bottomY) {
-	          this.vx = -this.vx;
-	          this.ping.play();
+
+	          if (player1.height > 30) {
+	            player1.height = player1.height - 2;
+	            this.leaveBoard();
+	          }
 	        }
 	      }
 	    }
@@ -1205,16 +1223,14 @@
 
 	      svg.appendChild(fireball);
 
-	      // const rightGoal = this.x + this.radius >= this.boardWidth;
-	      // const leftGoal = this.x - this.radius <= 0;
+	      var hitRightWall = this.x + this.radius >= this.boardWidth;
+	      var hitLeftWall = this.x - this.radius <= 0;
 
-	      // if ( rightGoal ) {
-	      //   this.direction = -1;
-	      //   this.scoreGoal( paddle1 );
-	      // } else if ( leftGoal ) {
-	      //   this.direction = 1;
-	      //   this.scoreGoal( paddle2 );
-	      // }
+	      if (hitRightWall) {
+	        this.leaveBoard();
+	      } else if (hitLeftWall) {
+	        this.leaveBoard();
+	      }
 	    }
 	  }]);
 

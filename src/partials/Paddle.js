@@ -60,6 +60,7 @@ export default class Paddle {
 	}
 
 	render( svg ) {
+
 		let paddle = document.createElementNS( SVG_NS, 'rect' );
 		paddle.setAttributeNS( null, 'width', this.width );
 		paddle.setAttributeNS( null, 'height', this.height );
