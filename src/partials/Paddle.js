@@ -1,7 +1,6 @@
 import {
 	SVG_NS,
 	GAMESETTINGS,
-	KEYS
 } from '../settings';
 
 export default class Paddle {
@@ -20,7 +19,7 @@ export default class Paddle {
 
 		document.addEventListener ( 'keydown', event => {
 			if ( this.paused === false ) {
-				this.keyMap[event.keyCode] = event.type == 'keydown';
+				this.keyMap[event.keyCode] = event.type === 'keydown';
 
 				if ( this.keyMap[this.up] ) {
 					this.moveUP();
@@ -32,7 +31,7 @@ export default class Paddle {
 
 		document.addEventListener ( 'keyup', event => {
 			if ( this.paused === false ) {
-				this.keyMap[event.keyCode] = event.type == 'keydown';
+				this.keyMap[event.keyCode] = event.type === 'keydown';
 
 				if ( this.keyMap[this.up] ) {
 					this.moveUP();

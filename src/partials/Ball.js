@@ -46,34 +46,55 @@ export default class Ball {
     }
   }
 
+  paddleCollisionCheck(player, playerCoordinates) {
+    if ( player === 'player2' ) {
+
+      let paddle = playerCoordinates;
+      let [leftX, rightX, topY, bottomY] = paddle;
+
+      if (
+          this.x + this.radius >= leftX &&
+          this.x + this.radius <= rightX &&
+          this.y + this.radius >= topY && 
+          this.y - this.radius <= bottomY
+      ) {
+          return true;
+      }
+    } else if ( player === 'player1' ) {
+
+      let paddle = playerCoordinates;
+      let [leftX, rightX, topY, bottomY] = paddle;
+
+      if (
+          this.x - this.radius >= leftX &&
+          this.x - this.radius <= rightX &&
+          this.y + this.radius >= topY && 
+          this.y - this.radius <= bottomY
+      ) {
+          return true;
+      }
+    }
+  }
+
   paddleCollision( player1, player2 ) {
     if ( this.vx > 0 ) {
 
-      let paddle = player2.coordinates( player2.x, player2.y, player2.width, player2.height );
-      let [leftX, rightX, topY, bottomY] = paddle;
-
-      if (
-        this.x + this.radius >= leftX &&
-        this.x + this.radius <= rightX &&
-        this.y + this.radius >= topY && this.y - this.radius <= bottomY
+      if ( 
+        this.paddleCollisionCheck( 'player2', player2.coordinates( player2.x, player2.y, player2.width, player2.height ))
+        && player2.height > 30
       ) {
         this.vx = -this.vx;
         this.ping.play();
-      }
+     }
 
     } else {
-
-      let paddle = player1.coordinates( player1.x, player1.y, player1.width, player1.height );
-      let [leftX, rightX, topY, bottomY] = paddle;
-
       if (
-        this.x - this.radius <= rightX &&
-        this.x - this.radius >= leftX &&
-        this.y + this.radius >= topY && this.y - this.radius <= bottomY
+        this.paddleCollisionCheck( 'player1', player1.coordinates( player1.x, player1.y, player1.width, player1.height ))
+        && player1.height > 30
       ) {
         this.vx = -this.vx;
         this.ping.play();
-      }
+      }    
     }
   }
 
