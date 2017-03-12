@@ -64,11 +64,12 @@ export default class Game {
 	makeFireball(aggressor) {
 		let firedBy = aggressor;
 		this.fireballCount++;
-		this.fireballs[this.fireballCount] = new Fireball(
+		let fireball = new Fireball(
 			GAMESETTINGS.ballRadius,
 			this.width,
 			this.height,
 			firedBy);
+		this.fireballs.push(fireball);
 	}
 
 	makePaddle1() {
@@ -117,6 +118,31 @@ export default class Game {
 		);
 	}
 
+	releaseExtraBalls(svg, paddle1, paddle2) {
+		if ( paddle1.score >= 2 || paddle2.score >= 2 ) {
+
+			this.ball2.render( svg, paddle1, paddle2 );
+		}
+
+		if ( paddle1.score >= 10 || paddle2.score >= 10 ) {
+
+			this.ball3.render( svg, this.paddle1, this.paddle2 );
+		}
+	}
+
+	endGame() {
+		if ( this.paddle1.score >= 2 ) {
+
+			this.winner = 'Player 1';
+			this.hasWinner = true;
+
+		} else if ( this.paddle2.score >= 2 ) {
+
+			this.winner = 'Player 2';
+			this.hasWinner = true;
+		}
+	}
+
 	render() {
 
 		if ( this.paused ) {
@@ -138,33 +164,14 @@ export default class Game {
 		this.player1Score.render( svg, this.paddle1.score );
 		this.player2Score.render( svg, this.paddle2.score );
 
-		if ( !( this.fireballs === [] ) && !( this.fireballCount === 0 )) {
-
-			for (var i = 1 ; i <= this.fireballCount; i++) {
+		if ( this.fireballs.length > 0 ) {
+			for (var i = 0 ; i < this.fireballs.length; ++i) {
 				this.fireballs[i].render ( svg, this.paddle1, this.paddle2 );
 			}
 		}
+		
+		this.releaseExtraBalls(svg, this.paddle1, this.paddle2);
 
-
-		if ( this.paddle1.score >= 5 || this.paddle2.score >= 5 ) {
-
-			this.ball2.render( svg, this.paddle1, this.paddle2 );
-		}
-
-		if ( this.paddle1.score >= 10 || this.paddle2.score >= 10 ) {
-
-			this.ball3.render( svg, this.paddle1, this.paddle2 );
-		}
-
-		if ( this.paddle1.score >= 20 ) {
-
-			this.winner = 'Player 1';
-			this.hasWinner = true;
-
-		} else if ( this.paddle2.score >= 20 ) {
-
-			this.winner = 'Player 2';
-			this.hasWinner = true;
-		}
+		this.endGame();
 	}
 }
