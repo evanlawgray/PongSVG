@@ -8,15 +8,14 @@ export default class Fireball {
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
     this.aggressor = aggressor;
-    
-    if (aggressor.x < 290) {
+    this.ping = new Audio( '../public/sounds/pong-03.wav' );
+    this.renderCount = 0;
+    if (aggressor.x < this.boardWidth / 2) {
       this.direction = 1;
-    } else if (aggressor.x > 291) {
+    } else if (aggressor.x > 1 + this.boardWidth / 2 ) {
       this.direction = -1;
     }
-
     this.fire();
-    this.ping = new Audio( '../public/sounds/pong-03.wav' );
   }
 
   fire() {
@@ -32,6 +31,15 @@ export default class Fireball {
     this.vy = 0;
 
     this.vx = this.direction * ( 6 - Math.abs( this.vy ));
+  }
+
+  flash(fireball) {
+    if ( this.renderCount % 8 === 0 && !this.renderCount % 16 === 0 ) {
+      fireball.setAttributeNS( null, 'fill', 'yellow' );
+    }
+    if ( this.renderCount % 16 === 0 ) {
+      fireball.setAttributeNS( null, 'fill', 'white' );
+    }
   }
 
   leaveBoard() {
@@ -109,6 +117,8 @@ export default class Fireball {
 
   render( svg, paddle1, paddle2 ) {
 
+    this.renderCount++;
+
     this.wallCollision();
     this.paddleCollision( paddle1, paddle2 );
 
@@ -123,6 +133,8 @@ export default class Fireball {
     fireball.setAttributeNS( null, 'fill', 'red' );
 
     svg.appendChild( fireball );
+
+    this.flash( fireball );
 
     const hitRightWall = this.x + this.radius >= this.boardWidth;
     const hitLeftWall = this.x - this.radius <= 0;
