@@ -25,8 +25,8 @@ export default class Game {
 		this.paddleWidth = GAMESETTINGS.paddleWidth;
 		this.paddleHeight = GAMESETTINGS.paddleHeight;
 
+		this.balls = [];
 		this.fireballs = [];
-		this.fireballCount = 0;
 
 		this.gameElement = document.getElementById( this.element );
 
@@ -51,10 +51,6 @@ export default class Game {
 		this.makePaddle2();
 
 		this.makeBall1();
-
-		this.makeBall2();
-
-		this.makeBall3();
 
 		this.player1Score = new Score( this.width / 2 - 70, 40, 40 );
 
@@ -95,48 +91,30 @@ export default class Game {
 	}
 
 	makeBall1() {
-		this.ball1 = new Ball(
+		let ball1 = new Ball(
 			GAMESETTINGS.ballRadius,
 			this.width,
 			this.height
 		);
+		this.balls.push(ball1);
 	}
 
-	makeBall2() {
-		this.ball2 = new ExtraBall(
+	makeExtraBall() {
+		let extraBall = new ExtraBall(
 			GAMESETTINGS.ballRadius,
 			this.width,
 			this.height
 		);
-	}
-
-	makeBall3() {
-		this.ball3 = new ExtraBall(
-			GAMESETTINGS.ballRadius,
-			this.width,
-			this.height
-		);
-	}
-
-	releaseExtraBalls(svg, paddle1, paddle2) {
-		if ( paddle1.score >= 2 || paddle2.score >= 2 ) {
-
-			this.ball2.render( svg, paddle1, paddle2 );
-		}
-
-		if ( paddle1.score >= 10 || paddle2.score >= 10 ) {
-
-			this.ball3.render( svg, this.paddle1, this.paddle2 );
-		}
+		this.balls.push(extraBall);
 	}
 
 	endGame() {
-		if ( this.paddle1.score >= 2 ) {
+		if ( this.paddle1.score >= 20 ) {
 
 			this.winner = 'Player 1';
 			this.hasWinner = true;
 
-		} else if ( this.paddle2.score >= 2 ) {
+		} else if ( this.paddle2.score >= 20 ) {
 
 			this.winner = 'Player 2';
 			this.hasWinner = true;
@@ -160,17 +138,29 @@ export default class Game {
 		this.board.render( svg );
 		this.paddle1.render( svg );
 		this.paddle2.render( svg );
-		this.ball1.render( svg, this.paddle1, this.paddle2 );
+		// this.ball1.render( svg, this.paddle1, this.paddle2 );
 		this.player1Score.render( svg, this.paddle1.score );
 		this.player2Score.render( svg, this.paddle2.score );
 
-		if ( this.fireballs.length > 0 ) {
-			for (var i = 0 ; i < this.fireballs.length; ++i) {
-				this.fireballs[i].render ( svg, this.paddle1, this.paddle2 );
+		if ( this.balls.length > 0 ) {
+			for (let i = 0; i < this.balls.length; ++i) {
+				this.balls[i].render( svg, this.paddle1, this.paddle2 );
 			}
 		}
-		
-		this.releaseExtraBalls(svg, this.paddle1, this.paddle2);
+
+		if ( this.fireballs.length > 0 ) {
+			for (let i = 0 ; i < this.fireballs.length; ++i) {
+				this.fireballs[i].render( svg, this.paddle1, this.paddle2 );
+			}
+		}
+
+		if ( this.balls.length <= 1 && (this.paddle1.score >= 5 || this.paddle2.score >= 5) ) {
+			this.makeExtraBall(svg, this.paddle1, this.paddle2);
+		}
+
+		if ( this.balls.length <= 2 && (this.paddle1.score >= 10 || this.paddle2.score >= 10) ) {
+			this.makeExtraBall(svg, this.paddle1, this.paddle2);
+		}
 
 		this.endGame();
 	}
