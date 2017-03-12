@@ -8,6 +8,7 @@ import Paddle from './Paddle';
 import Ball from './Ball';
 import ExtraBall from './Extra-Ball';
 import Fireball from './Fireball';
+import LifeOrb from './Life-Orb';
 import Score from './Score';
 
 export default class Game {
@@ -27,20 +28,27 @@ export default class Game {
 
 		this.balls = [];
 		this.fireballs = [];
+		this.lifeOrbs = [];
 
 		this.gameElement = document.getElementById( this.element );
 
 		document.addEventListener( 'keydown', event => {
+			let randomNum = Math.random();
 
 			switch ( event.keyCode ) {
 				case this.spaceBar:
 					this.paused = !this.paused;
 					break;
 				case KEYS.player1Fire:
-					this.makeFireball(this.paddle1);
+					if ( randomNum >= 0.33 ) {
+						this.makeFireball(this.paddle1);
+					} else { this.makeLifeOrb(this.paddle1); }
 					break;
 				case KEYS.player2Fire:
-					this.makeFireball(this.paddle2);
+					if ( randomNum >= 0.33 ) {
+						this.makeFireball(this.paddle2);
+					} else { this.makeLifeOrb(this.paddle2); }
+					break;
 			}
 		});
 
@@ -59,13 +67,22 @@ export default class Game {
 
 	makeFireball(aggressor) {
 		let firedBy = aggressor;
-		this.fireballCount++;
 		let fireball = new Fireball(
 			GAMESETTINGS.ballRadius,
 			this.width,
 			this.height,
 			firedBy);
 		this.fireballs.push(fireball);
+	}
+
+	makeLifeOrb(aggressor) {
+		let firedBy = aggressor;
+		let lifeOrb = new LifeOrb(
+			GAMESETTINGS.ballRadius,
+			this.width,
+			this.height,
+			firedBy);
+		this.lifeOrbs.push(lifeOrb);
 	}
 
 	makePaddle1() {
@@ -151,6 +168,12 @@ export default class Game {
 		if ( this.fireballs.length > 0 ) {
 			for (let i = 0 ; i < this.fireballs.length; ++i) {
 				this.fireballs[i].render( svg, this.paddle1, this.paddle2 );
+			}
+		}
+
+		if ( this.lifeOrbs.length > 0 ) {
+			for (let i = 0; i < this.lifeOrbs.length; ++i) {
+				this.lifeOrbs[i].render( svg, this.paddle1, this.paddle2 );
 			}
 		}
 
