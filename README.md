@@ -28,6 +28,8 @@ A basic pong game using SVGs.
 * 1: Add multiple balls when player score exceeds 5. (score:5 -- balls: 2; score: 10 -- balls: 3)
 * 2: Stop the game when a player's score reaches 20 and declare that player the winner ("Pong" in h1 is replaced by "Winner : [winning player]" with a color/scale changing animation).
 * 3: Make the second and third balls travel slower than the the first one. This helps to smooth out the difficulty curve and prevent games from ending to soon after multiple balls are introduced.
+*4: Shoot 'fireballs' from paddles on key press ('S' for player 1 and '/' for player 2). 1/3 of the time when a player fires, a 'life orb' shoots out instead of a fireball..
+*5: If players are hit by fireballs, their paddle shrinks by 2px, if they are hit by a life orb, their paddle grows by 2px.
 
 ## Learning Outcomes
 
