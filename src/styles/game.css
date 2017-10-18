@@ -1,4 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -12,8 +12,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -24,7 +24,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
@@ -83,10 +83,12 @@ body {
 }
 
 h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem; 
-  text-align: center;
   color: white;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  position: relative;
+  bottom: 30px;
 }
 
 h1 > span {
@@ -97,6 +99,166 @@ h1 > span {
   position: absolute;
   top: 20%;
   left: 22.5%;
+}
+
+.player {
+  font-size: 1.2rem;
+  color: #FFF;
+  display: inline-block;
+  width: auto;
+  position: absolute;
+  top: 20px;
+}
+
+.player-2 {
+  right: 0;
+}
+
+.instructions {
+  background: white;
+  height: 100%;
+  width: 400px;
+  right: 0;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+}
+
+.instructions-header {
+  font-size: 1.5rem;
+  margin: 20px auto;
+}
+
+.player-controls {
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.instructions p {
+  display: inline-block;
+  font-size: 1.3rem;
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+}
+
+.p1-controls, .p2-controls {
+  box-sizing: border-box;
+  height: 100%;
+  width: 50%;
+  padding: 15px 10px;
+  border: 1px solid black;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.p1-controls {
+  border-left: 0;
+}
+
+.p2-controls {
+  border-right: 0;
+}
+
+h3 {
+  font-size: 1.2rem;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #353535;
+}
+
+.controls-row {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.controls-row p {
+  padding-left: 20px;
+  font-size: 1.1rem;
+  text-align: left;
+}
+
+.key {
+  height: auto;
+  padding: 25px 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.key-row {
+  width: 100%;
+  padding: 15px;
+}
+
+.key-heading {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.key-heading h3 {
+  border: none;
+  margin: 0 5px;
+}
+
+.key-image-container {
+  height: 35px;
+  width: 30%;
+  position: relative;
+}
+
+.key-image-container img {
+  height: 100%;
+  width: auto;
+}
+
+.key-image-container i {
+  position: absolute;
+  top: 8px;
+  left: 13px;
+}
+
+.key-image-container span {
+  position: absolute;
+  right: -15px;
+  top: 7px;
+  font-size: 1.5rem;
+}
+
+.p1-controls .controls-row:last-child i {
+  left: 13px;
+}
+
+.p2-controls .controls-row:last-child i {
+  left: 16px;
+}
+
+.key-image-container i:not(.arrow-icon) {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.key-image-container .arrow-icon {
+  font-size: 1rem;
+  top: 10px;
+  left: 12px;
+}
+
+.key-row p {
+  font-size: 1rem;
 }
 
  .flashing {

@@ -3,10 +3,124 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Pong</title>
+		<link rel="stylesheet" href="./public/icons/font-awesome/css/font-awesome.min.css" />
 	</head>
 	<body>
+		<section class="instructions">
+			<h2 class="instructions-header">Instructions</h2>
+
+			<div class="player-controls">
+				<div class="p1-controls">
+					<h3>Player 1</h3>
+
+					<div class="controls-row">
+						<div class="key-image-container">
+							<img src="./public/images/small-key.png" alt="Letter A key image" />
+
+							<i aria-hidden="true">A</i>
+
+							<span>:</span>
+						</div>
+
+						<p>Move Up</p>
+					</div>
+
+					<div class="controls-row">
+						<div class="key-image-container">
+							<img src="./public/images/small-key.png" alt="Letter Z key image" />
+
+							<i aria-hidden="true">Z</i>
+
+							<span>:</span>
+						</div>
+
+						<p>Move Down</p>
+					</div>
+
+					<div class="controls-row">
+						<div class="key-image-container">
+							<img src="./public/images/small-key.png" />
+
+							<i aria-hidden="true">S</i>
+
+							<span>:</span>
+						</div>
+
+						<p>Shoot</p>
+					</div>
+				</div>
+
+				<div class="p2-controls">
+					<h3>Player 2</h3>
+
+					<div class="controls-row">
+						<div class="key-image-container">
+							<img src="./public/images/small-key.png" />
+
+							<i class="fa fa-arrow-up arrow-icon" aria-hidden="true"></i>
+
+							<span>:</span>
+						</div>
+
+						<p>Move Up</p>
+					</div>
+
+					<div class="controls-row">
+						<div class="key-image-container">
+							<img src="./public/images/small-key.png" />
+
+							<i class="fa fa-arrow-down arrow-icon" aria-hidden="true"></i>
+
+							<span>:</span>
+						</div>
+
+						<p>Move Down</p>
+					</div>
+
+					<div class="controls-row">
+						<div class="key-image-container">
+							<img src="./public/images/small-key.png" />
+
+							<i aria-hidden="true">/</i>
+
+							<span>:</span>
+						</div>
+
+						<p>Shoot</p>
+					</div>
+				</div>
+				<p>Press Space to Pause</p>
+			</div>
+
+			<div class="key">
+				<div class="key-row">
+					<div class="key-heading">
+						<h3>Fireball</h3>
+						<svg width="24" height="24" viewbox="0 0 24 24">
+							<circle cx="12" cy="12" r="10" fill="red" />
+						</svg>
+					</div>
+					<p>Shoot fireballs at your opponent to reduce the size of their paddle.</p>
+				</div>
+
+				<div class="key-row">
+					<div class="key-heading">
+						<h3>Life Orb</h3>
+						<svg width="24" height="24" viewbox="0 0 24 24">
+							<circle cx="12" cy="12" r="10" stroke="aquamarine" stroke-width="2" fill="none" />
+						</svg>
+					</div>
+					<p>Gather life orbs to increase the size of your own paddle.</p>
+				</div>
+
+				<p>First Player to 20 Points Wins!</p>
+			</div>
+		</section>
+
 		<div class="game-wrapper">
+			<p class="player">Player 1</p>
 			<h1 id="main-header">Pong <span>Wars</span></h1>
+			<p class="player player-2">Player 2</p>
 			<div id="game"></div>
 		</div>
 		<script type="text/javascript" src="build/bundle.js"></script>

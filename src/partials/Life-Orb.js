@@ -23,7 +23,7 @@ export default class LifeOrb {
   fire() {
 
     if (this.aggressor.x < 290) {
-      this.x = this.aggressor.x + (this.aggressor.width +1);
+      this.x = this.aggressor.x + (this.aggressor.width + 1);
     } else {
       this.x = this.aggressor.x - (this.aggressor.width - 1);
     }
