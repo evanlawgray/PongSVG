@@ -10,7 +10,7 @@ export default class Ball {
     this.direction = 1;
     this.reset();
 
-    this.ping = new Audio( '../public/sounds/pong-03.wav' );
+    this.ping = new Audio( '../../public/sounds/pong-03.wav' );
   }
 
   reset() {
@@ -55,7 +55,7 @@ export default class Ball {
       if (
           this.x + this.radius >= leftX &&
           this.x + this.radius <= rightX &&
-          this.y + this.radius >= topY && 
+          this.y + this.radius >= topY &&
           this.y - this.radius <= bottomY
       ) {
           return true;
@@ -68,7 +68,7 @@ export default class Ball {
       if (
           this.x - this.radius >= leftX &&
           this.x - this.radius <= rightX &&
-          this.y + this.radius >= topY && 
+          this.y + this.radius >= topY &&
           this.y - this.radius <= bottomY
       ) {
           return true;
@@ -79,7 +79,7 @@ export default class Ball {
   paddleCollision( player1, player2 ) {
     if ( this.vx > 0 ) {
 
-      if ( 
+      if (
         this.paddleCollisionCheck( 'player2', player2.coordinates( player2.x, player2.y, player2.width, player2.height ))
         && player2.height > 30
       ) {
@@ -94,7 +94,7 @@ export default class Ball {
       ) {
         this.vx = -this.vx;
         this.ping.play();
-      }    
+      }
     }
   }
 

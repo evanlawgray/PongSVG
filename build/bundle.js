@@ -872,7 +872,7 @@
 	    this.direction = 1;
 	    this.reset();
 
-	    this.ping = new Audio('../public/sounds/pong-03.wav');
+	    this.ping = new Audio('../../public/sounds/pong-03.wav');
 	  }
 
 	  _createClass(Ball, [{
